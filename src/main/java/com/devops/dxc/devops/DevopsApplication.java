@@ -6,10 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DevopsApplication {
 
-	public  void main(String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(DevopsApplication.class, args);
 	}
-
-	
 
 }
