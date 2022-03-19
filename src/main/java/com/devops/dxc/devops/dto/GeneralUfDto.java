@@ -1,38 +1,22 @@
 package com.devops.dxc.devops.dto;
 
+import java.io.Serializable;
+import java.util.List;
 
-public class GeneralUfDto {
- 
+
+public class GeneralUfDto implements Serializable{
+
+    private static final long serialVersionUID = 2405172041950251807L;
     private String version;
     private String autor;
     private String codigo;
     private String nombre;
     private String unidad_medida;
-    private serie serie;
+    private List<serie> serie;
 
     
     public GeneralUfDto() {
     }
-
-    
-
-
-
-
-    public GeneralUfDto(String version, String autor, String codigo, String nombre, String unidad_medida,
-            com.devops.dxc.devops.dto.serie serie) {
-        this.version = version;
-        this.autor = autor;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.unidad_medida = unidad_medida;
-        this.serie = serie;
-    }
-
-
-
-
-
 
     public String getVersion() {
         return version;
@@ -65,14 +49,21 @@ public class GeneralUfDto {
         this.unidad_medida = unidad_medida;
     }
 
-    public serie getSerie() {
+
+
+    public List<serie> getSerie() {
         return serie;
     }
 
-    public void setSerie(serie serie) {
+    public void setSerie(List<serie> serie) {
         this.serie = serie;
     }
- 
+
+    @Override
+    public String toString() {
+        return "GeneralUfDto [autor=" + autor + ", codigo=" + codigo + ", nombre=" + nombre + ", serie=" + serie
+                + ", unidad_medida=" + unidad_medida + ", version=" + version + "]";
+    }
 
     
 }
