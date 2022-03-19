@@ -1,6 +1,14 @@
 package com.devops.dxc.devops.model;
 
+import com.devops.dxc.devops.dto.GeneralUfDto;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
+
 public class Util {
+
+    @Autowired
+    private static RestTemplate restTemplate;
 
     /**
      * Método para cacular el 10% del ahorro en la AFP.  Las reglas de negocio se pueden conocer en 
@@ -21,14 +29,43 @@ public class Util {
             return (int) (ahorro*0.1);
         }
     }
-
+    
+    
     /**
      * Método que retorna el valor de la UF.  Este método debe ser refactorizado por una integración a un servicio
      * que retorne la UF en tiempo real.  Por ejemplo mindicador.cl
      * @return
      */
-    public static int getUf(){
+    public static  int getUf(){
+
+      
+        try {
+            System.out.println("inicio Servicio");
+            GeneralUfDto generalUfDto = restTemplate.getForObject("https://mindicador.cl/api/uf/19-03-2022", GeneralUfDto.class);
+           
+           
+            System.out.println("fin servicio");
+        
+            System.out.println("generalUfDto.getUfDto().getValor(): " +  generalUfDto.getSerie().getValor()); 
+       
+        } catch (Exception e) {
+           System.out.println(e.toString());
+        }
+   
         return 29000;
     }
+
+
+    public static int saldoAhorro(int ahorro) {
+		double noventaxciento = ahorro * 0.9;
+		System.out.println("SaldoAhorro: "+(int) noventaxciento); 
+		return (int) noventaxciento;
+	}
     
+    public static int impuesto(int dxc) {
+		double impuesto = dxc * 0.1;
+		System.out.println("impuesto1: "+(int) impuesto); 
+		return (int) impuesto;
+	}
+
 }

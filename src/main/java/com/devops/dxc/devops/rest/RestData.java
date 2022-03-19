@@ -22,6 +22,9 @@ public class RestData {
 		LOGGER.log(Level.INFO, "< Trabajo DevOps - DXC > <Consultado Diez por ciento>");
 		
         Dxc response = new Dxc(Integer.parseInt(ahorro), Integer.parseInt(sueldo));
+
 		return response;
 	}
+
+
 }
