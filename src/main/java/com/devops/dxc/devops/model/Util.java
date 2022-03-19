@@ -1,5 +1,8 @@
 package com.devops.dxc.devops.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.devops.dxc.devops.dto.GeneralUfDto;
 
 import org.springframework.web.client.RestTemplate;
@@ -38,11 +41,16 @@ public class Util {
      */
     public static  double getUf(){
 
-      
+            SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println(formatter.format(date));
 
+
+           String  url = "https://mindicador.cl/api/uf/"+formatter.format(date);
+            System.out.println("url : " + url);
             System.out.println("inicio Servicio");
             RestTemplate restTemplate = SingleObjectFactory.getRestTemplateInstance();
-            GeneralUfDto generalUfDto = restTemplate.getForObject("https://mindicador.cl/api/uf/19-03-2022", GeneralUfDto.class);
+            GeneralUfDto generalUfDto = restTemplate.getForObject(url, GeneralUfDto.class);
            
             System.out.println(generalUfDto.toString());
             System.out.println("fin servicio");
