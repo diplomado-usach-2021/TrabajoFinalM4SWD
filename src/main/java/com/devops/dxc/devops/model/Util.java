@@ -7,8 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class Util {
 
-    @Autowired
-    private static RestTemplate restTemplate;
+ 
 
     /**
      * Método para cacular el 10% del ahorro en la AFP.  Las reglas de negocio se pueden conocer en 
@@ -41,12 +40,13 @@ public class Util {
       
         try {
             System.out.println("inicio Servicio");
-            GeneralUfDto generalUfDto = restTemplate.getForObject("https://mindicador.cl/api/uf/19-03-2022", GeneralUfDto.class);
+            RestTemplate restTemplate = SingleObjectFactory.getRestTemplateInstance();
+          // GeneralUfDto generalUfDto = restTemplate.getForObject("https://mindicador.cl/api/uf/19-03-2022", GeneralUfDto.class);
            
            
             System.out.println("fin servicio");
         
-            System.out.println("generalUfDto.getUfDto().getValor(): " +  generalUfDto.getSerie().getValor()); 
+         //   System.out.println("generalUfDto.getUfDto().getValor(): " +  generalUfDto.getSerie().getValor()); 
        
         } catch (Exception e) {
            System.out.println(e.toString());
