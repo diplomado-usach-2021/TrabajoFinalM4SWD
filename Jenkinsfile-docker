@@ -24,24 +24,26 @@ pipeline {
         stage('Run & Newman testing') {
             steps {
                 sh '''
+                    docker stop app-running || echo "No esta corriendo"
                     docker run -d --name app-running -p 8081:8081 --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 spring-boot:run 
                     sleep 30
-                    docker run --network=host --rm -v $(pwd):/code --workdir /code postman/newman run dxc.postman_collection.json || docker stop app-running && exit 1
+                    docker run --network=host --rm -v $(pwd):/code --workdir /code postman/newman run dxc.postman_collection.json || exit 1
                     echo "Newman test OK, killing containers"
                     docker stop app-running
                 '''
             }
         }
-
-        stage('Cleaning root directories') {
-            steps {
-                sh 'docker run --rm -v $(pwd):/code --workdir /code maven /bin/sh -c "rm -rf target/ .m2/'
-            }
-        }
-        
+       
         stage('Test Selenium') {
             steps {
                 sh "echo 'Aca van los selenium test'"
+            }
+        }
+
+
+        stage('Cleaning root directories') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/code --workdir /code maven /bin/sh -c "rm -rf target/ .m2/"'
             }
         }
     }
