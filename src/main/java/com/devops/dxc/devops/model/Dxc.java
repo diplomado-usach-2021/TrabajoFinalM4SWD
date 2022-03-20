@@ -40,7 +40,7 @@ public class Dxc implements Serializable{
 	}
 	public int getImpuesto() {
 		// return impuesto;
-		return Util.impuesto(getDxc());
+		return Util.impuesto(getDxc(),getSueldo());
 	}
 	public void setImpuesto(int impuesto) {
 		this.impuesto = impuesto;
