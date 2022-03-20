@@ -16,12 +16,6 @@ pipeline {
             }
         }
 
-        stage('Compile') {
-            steps {
-                sh "./mvnw -Dmaven.repo.local=.m2 clean compile"
-            }
-        }
-
         stage('test') {
             steps {
                 sh "./mvnw -Dmaven.repo.local=.m2 clean test"
