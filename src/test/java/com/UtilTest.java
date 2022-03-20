@@ -26,7 +26,7 @@ public class UtilTest {
 
 	@Test
 	public void testImpuesto() throws Exception {
-		assertEquals(400000, util.impuesto(diezxciento.getDxc(),2000000));
+		assertEquals(600000, util.impuesto(diezxciento.getDxc(),2000000));
 
 	}
 

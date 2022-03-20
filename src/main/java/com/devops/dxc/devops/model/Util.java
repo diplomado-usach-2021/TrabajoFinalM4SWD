@@ -74,7 +74,7 @@ public class Util {
         if (montoFinal < 4000000){
             impuesto = 0;
         }else{
-             impuesto = dxc * 0.1;
+             impuesto = montoFinal * 0.1;
         }
 
 	
