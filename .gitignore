@@ -34,3 +34,4 @@ build/
 
 #Maven local repository
 .m2
+nohup.out

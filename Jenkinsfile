@@ -9,6 +9,13 @@ pipeline {
             }
         }
 */
+
+        stage('Compile') {
+            steps {
+                sh "./mvnw -Dmaven.repo.local=.m2 clean compile"
+            }
+        }
+
         stage('Compile') {
             steps {
                 sh "./mvnw -Dmaven.repo.local=.m2 clean compile"
@@ -30,7 +37,7 @@ pipeline {
         stage('Run & Newman testing') {
             steps {
                 sh '''
-                    nohup ./mvnw -Dmaven.repo.local=.m2 spring-boot:run && /
+                    nohup ./mvnw -Dmaven.repo.local=.m2 spring-boot:run & && /
                     newman run dxc.postman_collection.json && /
                     echo "Newman test OK, killing the java proccess" && /
                     kill -9 `jps | grep "DevopsApplication" | cut -d " " -f 1`
