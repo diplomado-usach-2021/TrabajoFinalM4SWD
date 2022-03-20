@@ -27,3 +27,5 @@
 *  localhost:8080/rest/msdxc/dxc
 *  parametros del form data : sueldo y ahorro 
 
+### Calculo impuesto
+* si la suma del 10% + el sueldo es menor que 4 millones no se cobra impuesto y si es mayor o igual se cobra un 10% al retiro.

@@ -67,8 +67,17 @@ public class Util {
 		return (int) noventaxciento;
 	}
     
-    public static int impuesto(int dxc) {
-		double impuesto = dxc * 0.1;
+    public static int impuesto(int dxc, int sueldo) {
+        int montoFinal = sueldo + dxc;
+        System.out.println("montoFinal" + montoFinal);
+        double impuesto ;
+        if (montoFinal < 4000000){
+            impuesto = 0;
+        }else{
+             impuesto = dxc * 0.1;
+        }
+
+	
 		System.out.println("impuesto1: "+(int) impuesto); 
 		return (int) impuesto;
 	}
