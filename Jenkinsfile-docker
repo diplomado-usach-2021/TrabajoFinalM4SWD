@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Compile') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 clean compile'
+            }
+        }
+
+        stage('test') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 clean test'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 clean package'
+            }
+        }
+
+        stage('Run & Newman testing') {
+            steps {
+                sh '''
+                    docker run -d --name app-running -p 8081:8081 --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 spring-boot:run && /
+                    docker run --network=host --rm -v $(pwd):/code --workdir /code postman/newman run dxc.postman_collection.json && /
+                    echo "Newman test OK, killing containers" && /
+                    docker stop app-running
+                '''
+            }
+        }
+
+        stage('Cleaning root directories') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/code --workdir /code maven /bin/sh -c "rm -rf target/ .m2/'
+            }
+        }
+        
+        stage('Test Selenium') {
+            steps {
+                sh "echo 'Aca van los selenium test'"
+            }
+        }
+    }
+}

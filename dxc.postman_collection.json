@@ -1,0 +1,352 @@
+{
+	"info": {
+		"_postman_id": "4ef2bf56-8979-4e72-ab25-13f0d3413753",
+		"name": "dxc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "10%<= 1M & Ahorro>=1M",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Diez x Ciento\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.ahorro).to.eql(5000000);",
+							"  pm.expect(responseJson.dxc).to.eql(1000000);",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sueldo",
+							"value": "1000000",
+							"type": "default"
+						},
+						{
+							"key": "ahorro",
+							"value": "5000000",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/rest/msdxc/dxc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"msdxc",
+						"dxc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10% > 150UF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Diez x Ciento\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.ahorro).to.eql(50000000);",
+							"  pm.expect(responseJson.dxc).to.be.below(4850000); //menor a 150UF, valor clp aprox",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sueldo",
+							"value": "1000000",
+							"type": "default"
+						},
+						{
+							"key": "ahorro",
+							"value": "50000000",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/rest/msdxc/dxc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"msdxc",
+						"dxc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ahorro <= 1M",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Diez x Ciento\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.ahorro).to.eql(1000000);",
+							"  pm.expect(responseJson.dxc).to.eql(responseJson.ahorro);",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sueldo",
+							"value": "1000000",
+							"type": "default"
+						},
+						{
+							"key": "ahorro",
+							"value": "1000000",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/rest/msdxc/dxc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"msdxc",
+						"dxc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10%",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Diez x Ciento\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.ahorro).to.eql(30000000);",
+							"  pm.expect(responseJson.dxc).to.eql(3000000);",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sueldo",
+							"value": "1000000",
+							"type": "default"
+						},
+						{
+							"key": "ahorro",
+							"value": "30000000",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/rest/msdxc/dxc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"msdxc",
+						"dxc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Saldo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Diez x Ciento\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.ahorro).to.eql(30000000);",
+							"  pm.expect(responseJson.saldo).to.eql(27000000);",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sueldo",
+							"value": "1000000",
+							"type": "default"
+						},
+						{
+							"key": "ahorro",
+							"value": "30000000",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/rest/msdxc/dxc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"msdxc",
+						"dxc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Impuesto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Diez x Ciento\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.ahorro).to.eql(30000000);",
+							"  pm.expect(responseJson.sueldo).to.eql(1000000);",
+							"  pm.expect(responseJson.impuesto).to.eql(400000);",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sueldo",
+							"value": "1000000",
+							"type": "default"
+						},
+						{
+							"key": "ahorro",
+							"value": "30000000",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/rest/msdxc/dxc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"msdxc",
+						"dxc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
