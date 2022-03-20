@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('git clone') {
-            steps {
-                sh 'echo "cleaning workspace" && rm -rf $(pwd)/* && git clone https://github.com/diplomado-usach-2021/TrabajoFinalM4SWD.git . '
-            }
-        }
 
         stage('Compile') {
             steps {
@@ -34,6 +29,12 @@ pipeline {
                     echo "Newman test OK, killing containers" && /
                     docker stop app-running
                 '''
+            }
+        }
+
+        stage('Cleaning root directories') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/code --workdir /code maven /bin/sh -c "rm -rf target/ .m2/'
             }
         }
         
