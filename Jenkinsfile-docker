@@ -19,9 +19,9 @@ pipeline {
             steps {
                 sh '''
                     docker network create --driver bridge app_running || true
-                    docker run -d --network app_running --name api-running -p 8081:8081 finalm4-api
+                    docker run --rm -d --network app_running --name api-running -p 8081:8081 finalm4-api
                     sleep 10
-                    docker run -d --network app_running --name frontend-running -p 3000:3000 finalm4-frontend
+                    docker run --rm -d --network app_running --name frontend-running -p 3000:3000 finalm4-frontend
                 '''
             }
         }
