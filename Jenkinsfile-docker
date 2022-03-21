@@ -35,7 +35,7 @@ pipeline {
                             echo "Newman test OK"
                         '''
                     }
-                    catch {
+                    catch (all) {
                         echo "Fallaron los newman-test, deteniendo los contenedores"
                         sh '''
                             docker stop api-running || echo "No esta corriendo api-running"
