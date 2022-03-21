@@ -1,0 +1,7 @@
+FROM node:16-alpine
+
+RUN apk add git && git clone https://github.com/diplomado-usach-2021/frontend-retiro.git
+WORKDIR /frontend-retiro
+
+RUN npm install --force 
+CMD [ "npm", "start" ]

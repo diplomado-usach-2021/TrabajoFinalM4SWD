@@ -3,44 +3,64 @@ pipeline {
 
     stages {
 
-        stage('Compile') {
+        stage('Build API') {
             steps {
-                sh 'docker run --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 clean compile'
+                sh 'docker build -f Dockerfile-api -t finalm4-api .'
             }
         }
 
-        stage('test') {
+        stage('Build Frontend') {
             steps {
-                sh 'docker run --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 clean test'
+                sh 'docker build -f Dockerfile-frontend -t finalm4-frontend .'
             }
         }
 
-        stage('Package') {
-            steps {
-                sh 'docker run --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 clean package'
-            }
-        }
-
-        stage('Run & Newman testing') {
+        stage('Run API & Front') {
             steps {
                 sh '''
-                    docker run -d --name app-running -p 8081:8081 --rm -v $(pwd):/code --workdir /code maven mvn -Dmaven.repo.local=/code/.m2 spring-boot:run && /
-                    docker run --network=host --rm -v $(pwd):/code --workdir /code postman/newman run dxc.postman_collection.json && /
-                    echo "Newman test OK, killing containers" && /
-                    docker stop app-running
+                    docker network create --driver bridge app_running || true
+                    docker run -d --network app_running --name api-running -p 8081:8081 finalm4-api
+                    sleep 10
+                    docker run -d --network app_running --name frontend-running -p 3000:3000 finalm4-frontend
                 '''
             }
         }
 
-        stage('Cleaning root directories') {
+        stage('Newman testing') {
             steps {
-                sh 'docker run --rm -v $(pwd):/code --workdir /code maven /bin/sh -c "rm -rf target/ .m2/'
+                script {
+                    try {
+                        sh '''
+                            docker run --network=host --rm -v $(pwd):/code --workdir /code postman/newman run dxc.postman_collection.json
+                            echo "Newman test OK"
+                        '''
+                    }
+                    catch (all) {
+                        echo "Fallaron los newman-test, deteniendo los contenedores"
+                        sh '''
+                            docker stop api-running || echo "No esta corriendo api-running"
+                            docker stop frontend-running || echo "No esta corriendo frontend-running"
+                            exit 1
+                        '''
+                    }
+                }
+                
             }
         }
-        
+
         stage('Test Selenium') {
             steps {
                 sh "echo 'Aca van los selenium test'"
+            }
+        }
+
+        stage('Stop API & Front') {
+            steps {
+                sh '''
+                    docker stop api-running || echo "No esta corriendo api-running"
+                    docker stop frontend-running || echo "No esta corriendo frontend-running"
+                    docker network rm app_running || true
+                '''
             }
         }
     }
