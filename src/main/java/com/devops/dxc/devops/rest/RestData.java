@@ -17,7 +17,8 @@ public class RestData {
 	
 	private final static Logger LOGGER = Logger.getLogger("devops.subnivel.Control");
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	//@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "/dxc", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Dxc getData(@RequestParam(name = "sueldo") String sueldo, @RequestParam(name = "ahorro") String ahorro){
 		
