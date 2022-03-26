@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                sh 'docker build -f Dockerfile-frontend -t finalm4-frontend .'
+                sh 'docker build --no-cache -f Dockerfile-frontend -t finalm4-frontend .'
             }
         }
 
@@ -21,7 +21,7 @@ pipeline {
                     docker network create --driver bridge app_running || true
                     docker run --rm -d --network app_running --name api-running -p 8081:8081 finalm4-api
                     sleep 10
-                    docker run --rm -d --name frontend-running -p 3000:3000 finalm4-frontend
+                    docker run --rm -d --network app_running --name frontend-running -p 3000:3000 finalm4-frontend
                 '''
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         stage('UnitTest && Selenium') {
             steps {
                 echo "Levantando selenium chrome-driver in docker"
-                sh 'docker run -d -p 4444:4444 --shm-size="2g" --name chromedriver selenium/standalone-chrome:4.1.2-20220317'
+                sh 'docker run --rm -d -p 4444:4444 --shm-size="2g" --network=host --name chromedriver selenium/standalone-chrome:4.1.2-20220317'
                 echo "Comenzando Selenium test"
                 script {
                     try {

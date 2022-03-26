@@ -2,6 +2,8 @@ package com;
 
 import org.testng.Assert;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -11,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -21,30 +24,26 @@ import org.junit.Before;
 public class AppTest 
 {
     public static ChromeOptions options = new ChromeOptions();
-    public static WebDriver driver = new ChromeDriver(options);
+    private WebDriver driver;
     JavascriptExecutor js;
 
     @Before
-    public void setUp(){
+    public void setUp() throws MalformedURLException{
         System.out.println("seteando ");
-        // options.addArguments("--headless");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        options.addArguments("--headless");
         options.addArguments("--whitelisted-ips");
-        // options.addArguments("--no-sandbox");
+        options.addArguments("--no-sandbox");
         options.addArguments("--disable-extensions");
         options.addArguments("--window-size=1024,768");
         System.out.println("Iniciando configuración...");
-
-        System.setProperty("webdriver.chrome.driver", "/drivers/chromedriver");
-        System.setProperty("webdriver.chrome.whitelistedIps", "");
-        
-        WebDriverManager.chromedriver().setup();
-        
-        driver.manage().window().maximize();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444"), chromeOptions);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
      @Test
     public void test10xc() {
+        System.out.println("Starting 10xc");
         driver.get("http://localhost:3000/");
         System.out.println("ejecucion");
         
@@ -63,7 +62,7 @@ public class AppTest
 
             sueldo.submit();
 
-            Thread.sleep(4000);
+            Thread.sleep(14000);
 
             WebElement getAmount = driver.findElement(By.id("getAmount"));
             WebElement getAvailable = driver.findElement(By.id("getAvailable"));
@@ -74,6 +73,10 @@ public class AppTest
             String retirar = getAmount.getText();
             String disponible = getAvailable.getText();
             String impuesto = getTax.getText();
+
+            System.out.println("retirar 1" + retirar);
+            System.out.println("disponible 1" + disponible);
+            System.out.println("impuesto 1" + impuesto);
 
             // asserts
 

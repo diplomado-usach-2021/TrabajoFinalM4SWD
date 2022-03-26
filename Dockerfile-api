@@ -2,6 +2,6 @@ FROM maven:3.8.4
 COPY . /code
 WORKDIR /code
 
-RUN mvn clean compile && mvn clean package
+RUN mvn -Dmaven.test.skip=true clean compile && mvn -Dmaven.test.skip clean package
 
 CMD [ "mvn", "spring-boot:run" ]
