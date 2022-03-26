@@ -61,10 +61,12 @@ pipeline {
                             docker rm -f chromedriver | echo "No esta corriendo chromedriver"
                         '''
                     }
-                    catch (all) {
+                    catch (Exception e) {
                         echo "Fallaron los test, deteniendo los contenedores"
                         sh '''
                             docker rm -f chromedriver | echo "No esta corriendo chromedriver"
+                            docker stop api-running || echo "No esta corriendo api-running"
+                            docker stop frontend-running || echo "No esta corriendo frontend-running"
                             exit 1
                         '''
                     }
