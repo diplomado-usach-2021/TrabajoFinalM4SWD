@@ -8,6 +8,9 @@ Crear un pipeline JOB y en la seccion de Pipeline configurar:
 1. Pipeline script from SCM
 2. SCM -> Git -> Repository URL=`https://github.com/diplomado-usach-2021/TrabajoFinalM4SWD.git`
 3. Branches to build = main
+
+### Evidencia
+Se adjunta archivo de log del pipeline corriendo de forma exitosa [LOG_FILE](Pipeline-Success.log)
 ## Jar Code URL Microservicio
 *  localhost:8081/rest/msdxc/dxc
 *  parametros del form data : sueldo y ahorro 
