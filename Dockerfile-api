@@ -2,6 +2,6 @@ FROM maven:3.8.4
 COPY . /code
 WORKDIR /code
 
-RUN mvn clean compile && mvn clean test && mvn clean package
+RUN mvn clean compile && mvn clean package
 
 CMD [ "mvn", "spring-boot:run" ]
