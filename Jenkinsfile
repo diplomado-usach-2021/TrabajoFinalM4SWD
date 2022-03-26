@@ -62,7 +62,7 @@ pipeline {
                         '''
                     }
                     catch (all) {
-                        echo "Fallaron los newman-test, deteniendo los contenedores"
+                        echo "Fallaron los test, deteniendo los contenedores"
                         sh '''
                             docker rm -f chromedriver | echo "No esta corriendo chromedriver"
                             exit 1
